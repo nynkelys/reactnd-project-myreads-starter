@@ -16,11 +16,14 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
-  componentDidMount() { // Fetch data from API
-      BooksAPI.getAll()
-      .then((bookNames) =>
-        this.setState({bookNames : bookNames})
-      )
+  componentDidMount() { // Fetch data from API and add them to this.state.bookNames
+      BooksAPI.getAll().then((bookNames) => {
+        this.setState({bookNames})
+      })
+  }
+
+  filterBook(shelfTitle) {
+    return this.state.bookNames.filter((b) => b.shelf === shelfTitle)
   }
 
   // Add functions here
@@ -41,13 +44,13 @@ class BooksApp extends React.Component {
               <div>
                 <Shelf // Inside shelf component we can find the books
                   shelfTitle = "Currently Reading"
-                  bookNames={this.state.bookNames}/>
+                  bookNames={this.filterBook("currentlyReading")}/>
                 <Shelf
                   shelfTitle = "Want to Read"
-                  bookNames={this.state.bookNames}/>
+                  bookNames={this.filterBook("wantToRead")}/>
                 <Shelf
                   shelfTitle = "Read"
-                  bookNames={this.state.bookNames}/>
+                  bookNames={this.filterBook("read")}/>
               </div>
             </div>
             <div className="open-search">

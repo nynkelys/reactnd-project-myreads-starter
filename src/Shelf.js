@@ -11,7 +11,8 @@ class Shelf extends Component {
                 <ol className="books-grid">
                   {this.props.bookNames.map((book) => ( // Map over books props of shelf component and create a list of books within each shelve
                     <li>
-                      {book.id}
+                      <Book
+                      book={book}/>
                     </li>
                   ))}
                 </ol>
