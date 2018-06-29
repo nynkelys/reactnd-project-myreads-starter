@@ -1,12 +1,19 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { Link }  from 'react-router-dom'
+import Book from "./Book"
 
 class Search extends Component {
+	state = { query: '' }
+	handleChange = (event) => {
+		this.setState({query: event.target.value}) // Now whatever we write in query will change the value of the input tag
+	}
+
 	render() {
 		return (
 			<div>
 	    		<div className="search-books-bar">
-	      			<a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-	      				<div className="search-books-input-wrapper">
+	      			<Link to="/" className="close-search">Close</Link>
+	      			<div className="search-books-input-wrapper">
 	        		{/*
 	                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
 	                  You can find these search terms here:
@@ -15,11 +22,24 @@ class Search extends Component {
 	                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
 	                  you don't find a specific author or title. Every search is limited by search terms.
 	        		*/}
-	        			<input type="text" placeholder="Search by title or author"/>
-	      				</div>
+		        		<input
+			        		type="text"
+			        		value={this.state.query}
+			        		placeholder="Search by title or author"
+			        		onChange={this.handleChange}
+			        	/>
+	      			</div>
 	    		</div>
 	    		<div className="search-books-results">
-	    	  		<ol className="books-grid"></ol>
+	    	  		<ol className="books-grid">
+	    	  			{this.props.booksInfo.map((book) => ( // Get booksInfo from App.js (hence this.props) and map over them, putting them in Book component below
+                    		<li>
+                      			<Book
+                      				book={book}
+                      			/>
+                    		</li>
+                  		))}
+	    	  		</ol>
 	   			</div>
    			</div>
 		)

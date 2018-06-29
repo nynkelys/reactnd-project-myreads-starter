@@ -8,21 +8,21 @@ import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    bookNames: [],
+    booksInfo: [],
   }
 
-  componentDidMount() { // Fetch data from API and add them to this.state.bookNames
-      BooksAPI.getAll().then((bookNames) => {
-        this.setState({bookNames})
+  // Now some regular homepage functions
+  componentDidMount() { // Fetch data from API and add them to this.state.booksInfo
+      BooksAPI.getAll().then((booksInfo) => {
+        this.setState({booksInfo})
       })
   }
 
-  filterBook(shelfTitle) {
-    return this.state.bookNames.filter((b) => b.shelf === shelfTitle) // Filter whole list of fetched API's on shelf name that is stored in book object
+  filterBook(shelfTitle) { // Filter whole list of fetched API's based on shelf name (book object shelf name vs. self-defined shelf name)
+    return this.state.booksInfo.filter((b) => b.shelf === shelfTitle)
   }
 
-  // Add functions here
-
+  // Now the render method to finish off with
   render() {
     return (
       <div className="app">
@@ -39,13 +39,13 @@ class BooksApp extends React.Component {
               <div>
                 <Shelf // Inside shelf component we can find the books
                   shelfTitle = "Currently Reading"
-                  bookNames={this.filterBook("currentlyReading")}/>
+                  booksInfo={this.filterBook("currentlyReading")}/>
                 <Shelf
                   shelfTitle = "Want to Read"
-                  bookNames={this.filterBook("wantToRead")}/>
+                  booksInfo={this.filterBook("wantToRead")}/>
                 <Shelf
                   shelfTitle = "Read"
-                  bookNames={this.filterBook("read")}/>
+                  booksInfo={this.filterBook("read")}/>
               </div>
             </div>
             <div className="open-search">

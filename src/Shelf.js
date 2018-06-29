@@ -9,7 +9,7 @@ class Shelf extends Component {
             <h2 className="bookshelf-title">{this.props.shelfTitle}</h2>
             <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {this.props.bookNames.map((book) => ( // Get booknames from App.js (hence this.props) and map over them, putting them in Book component below
+                  {this.props.booksInfo.map((book) => ( // Get booksInfo from App.js (hence this.props) and map over them, putting them in Book component below
                     <li>
                       <Book
                       book={book}/>
