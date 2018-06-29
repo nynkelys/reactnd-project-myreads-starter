@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link }  from 'react-router-dom'
-import Book from "./Book"
+import Book from './Book'
 
 class Search extends Component {
 	state = { query: '' }
@@ -32,7 +32,7 @@ class Search extends Component {
 	    		</div>
 	    		<div className="search-books-results">
 	    	  		<ol className="books-grid">
-	    	  			{this.props.booksInfo.map((book) => ( // Get booksInfo from App.js (hence this.props) and map over them, putting them in Book component below
+	    	  			{this.props.allBooks.map((book) => ( // Get allBooks prop from App.js (hence this.props) and map over them, putting them in results
                     		<li>
                       			<Book
                       				book={book}
