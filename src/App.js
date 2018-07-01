@@ -14,12 +14,18 @@ class BooksApp extends React.Component {
   // Now some regular homepage functions
   componentDidMount() { // Fetch data from API and add them to this.state.booksInfo
       BooksAPI.getAll().then((booksInfo) => {
-        this.setState({booksInfo})
+        this.setState({booksInfo: booksInfo})
       })
   }
 
-  filterBook(shelfTitle) { // Filter whole list of fetched API's based on shelf name (book object shelf name vs. self-defined shelf name)
-    return this.state.booksInfo.filter((b) => b.shelf === shelfTitle)
+  toNewShelf = (event) => {
+    BooksAPI.update({id: event.target.id}, event.target.value) // First event is book, second event is shelf
+    .then((response) => {
+       BooksAPI.getAll() // Get all these books
+       .then((books) => {
+        this.setState({booksInfo: books}) // Put them in the booksInfo array (update state)
+      });
+    });
   }
 
   // Now the render method to finish off with
@@ -42,13 +48,16 @@ class BooksApp extends React.Component {
               <div>
                 <Shelf // Inside shelf component we can find the books
                   shelfTitle = "Currently Reading"
-                  booksOnShelf={this.filterBook("currentlyReading")}/>
+                  booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "currentlyReading")}
+                  changeShelf = {this.toNewShelf}/>
                 <Shelf
                   shelfTitle = "Want to Read"
-                  booksOnShelf={this.filterBook("wantToRead")}/>
+                  booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "wantToRead")}
+                  changeShelf = {this.toNewShelf}/>
                 <Shelf
                   shelfTitle = "Read"
-                  booksOnShelf={this.filterBook("read")}/>
+                  booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "read")}
+                  changeShelf = {this.toNewShelf}/>
               </div>
             </div>
             <div className="open-search">

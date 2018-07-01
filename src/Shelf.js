@@ -1,19 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book'
 
-class Shelf extends Component {
-  render() {
+function Shelf(props, {shelfTitle, booksOnShelf, change}) { // Render method only, so stateless functional component
     return ( // Render one shelf (that is called three times in App.js)
       <div>
         <div className="bookshelf">
-            <h2 className="bookshelf-title">{this.props.shelfTitle}</h2>
+            <h2 className="bookshelf-title">{props.shelfTitle}</h2>
             <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {this.props.booksOnShelf.map((book) => ( // Get booksInfo prop from App.js (hence this.props) and map over them, putting them in Book component below
+                  {props.booksOnShelf.map((book) => ( // Get booksInfo prop from App.js (hence this.props) and map over them, putting them in Book component below
                     <li key={book.id}>
                       <Book
-                      book={book}/>
+                      book={book}
+                      changeShelf={props.change}/>
                     </li>
                   ))}
                 </ol>
@@ -21,12 +21,12 @@ class Shelf extends Component {
         </div>
       </div>
     )
-  }
+}
 
-  static propTypes = {
+  Shelf.propTypes = {
     booksOnShelf: PropTypes.array.isRequired,
     shelfTitle: PropTypes.string.isRequired,
   }
-}
+
 
 export default Shelf;
