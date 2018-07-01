@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link }  from 'react-router-dom'
 import Book from './Book'
-import escapeRegExp from 'escape-string-regexp' // Installed with npm
-import sortBy from 'sort-by' // Installed with npm
 import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
@@ -14,18 +12,20 @@ class Search extends Component {
 
 	updateQuery = (query) => {
 		this.setState({query: query}) // Now whatever we write in query will change the value of the input tag
+
 		if (query === '') {
 			this.setState({results: []})
 			return;
+		} else {
+			BooksAPI.search(query)
+			.then((results) => {
+				if (results instanceof Array) {
+					this.setState({results: results})
+				} else {
+					this.setState({results: []})
+				}
+			})
 		}
-		BooksAPI.search(query)
-		.then((results) => {
-			if (results instanceof Array) {
-				this.setState({results: results})
-			} else {
-				this.setState({results: []})
-			}
-		})
 	}
 
 	render() {
