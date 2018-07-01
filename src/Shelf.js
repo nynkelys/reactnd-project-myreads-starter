@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Book from './Book'
 
 class Shelf extends Component {
@@ -9,8 +10,8 @@ class Shelf extends Component {
             <h2 className="bookshelf-title">{this.props.shelfTitle}</h2>
             <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {this.props.booksInfo.map((book) => ( // Get booksInfo prop from App.js (hence this.props) and map over them, putting them in Book component below
-                    <li>
+                  {this.props.booksOnShelf.map((book) => ( // Get booksInfo prop from App.js (hence this.props) and map over them, putting them in Book component below
+                    <li key={book.id}>
                       <Book
                       book={book}/>
                     </li>
@@ -20,6 +21,12 @@ class Shelf extends Component {
         </div>
       </div>
     )
+  }
+
+  static propTypes = {
+    booksOnShelf: PropTypes.array.isRequired,
+    shelfTitle: PropTypes.string.isRequired,
+    book: PropTypes.object.isRequired
   }
 }
 

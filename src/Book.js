@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Chooser from './Chooser'
 
 class Book extends Component {
@@ -14,6 +15,10 @@ class Book extends Component {
 			        <div className="book-authors">{this.props.book.authors}</div>
 			    </div>
 		)
+	}
+
+	static propTypes = {
+		book: PropTypes.object.isRequired
 	}
 }
 

@@ -42,13 +42,13 @@ class BooksApp extends React.Component {
               <div>
                 <Shelf // Inside shelf component we can find the books
                   shelfTitle = "Currently Reading"
-                  booksInfo={this.filterBook("currentlyReading")}/>
+                  booksOnShelf={this.filterBook("currentlyReading")}/>
                 <Shelf
                   shelfTitle = "Want to Read"
-                  booksInfo={this.filterBook("wantToRead")}/>
+                  booksOnShelf={this.filterBook("wantToRead")}/>
                 <Shelf
                   shelfTitle = "Read"
-                  booksInfo={this.filterBook("read")}/>
+                  booksOnShelf={this.filterBook("read")}/>
               </div>
             </div>
             <div className="open-search">
