@@ -18,16 +18,6 @@ class BooksApp extends React.Component {
       })
   }
 
-  toNewShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf) // First event is book, second event is shelf
-    .then(() => {
-       book.shelf = shelf
-       this.setState(state => ({
-        booksInfo: state.booksInfo.filter(b => b.id !== book.id).concat([book])
-      }))
-    })
-  }
-
   // Now the render method to finish off with
   render() {
     return (
@@ -49,15 +39,15 @@ class BooksApp extends React.Component {
                 <Shelf // Inside shelf component we can find the books
                   shelfTitle = "Currently Reading"
                   booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "currentlyReading")}
-                  changeShelf = {this.toNewShelf}/>
+                  />
                 <Shelf
                   shelfTitle = "Want to Read"
                   booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "wantToRead")}
-                  changeShelf = {this.toNewShelf}/>
+                  />
                 <Shelf
                   shelfTitle = "Read"
                   booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "read")}
-                  changeShelf = {this.toNewShelf}/>
+                  />
               </div>
             </div>
             <div className="open-search">
