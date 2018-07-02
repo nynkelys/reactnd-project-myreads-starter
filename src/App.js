@@ -18,6 +18,11 @@ class BooksApp extends React.Component {
       })
   }
 
+  shelfChange = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+    .then(() => BooksAPI.getAll())
+  }
+
   // Now the render method to finish off with
   render() {
     return (
@@ -39,15 +44,15 @@ class BooksApp extends React.Component {
                 <Shelf // Inside shelf component we can find the books
                   shelfTitle = "Currently Reading"
                   booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "currentlyReading")}
-                  />
+                  shelfChange = {this.shelfChange}/>
                 <Shelf
                   shelfTitle = "Want to Read"
                   booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "wantToRead")}
-                  />
+                  shelfChange = {this.shelfChange}/>
                 <Shelf
                   shelfTitle = "Read"
                   booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "read")}
-                  />
+                  shelfChange = {this.shelfChange}/>
               </div>
             </div>
             <div className="open-search">

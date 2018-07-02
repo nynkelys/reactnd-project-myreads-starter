@@ -7,12 +7,34 @@ import * as BooksAPI from './BooksAPI'
 class Search extends Component {
 	state = {
 		query: '',
-		results: []
+		results: [],
+		booksOnShelves: []
 	}
 
 	clearQuery() {
 		this.setState({results: []})
 	}
+
+	shelfChange = (book, shelf) => {
+		BooksAPI.update(book, shelf).then(() => {
+			BooksAPI.getAll().then(books => {
+				this.setState({results: books})
+				this.updateSearchBookShelves()
+			})
+		})
+	}
+
+	updateSearchBookShelves() {
+	    this.setState({
+	      results: this.state.results.map(book => {
+	        book.shelf = 'none' // All results in search query get shelf 'none'
+	        this.state.booksOnShelves.forEach(bookOnShelf => { // Books already on shelves in main page
+	          bookOnShelf.id === book.id && (book.shelf = bookOnShelf.shelf)
+	        })
+	        return book;
+	      })
+	    })
+	  }
 
 	// TO DO: CLEAR RESULTS WHEN SEARCH BAR IS EMPTY
 	updateQuery = (query) => {

@@ -14,6 +14,7 @@ class Shelf extends Component { // Render method only, so stateless functional c
                       <li key={book.id}>
                         <Book
                         book={book}
+                        shelfChange={this.props.shelfChange}
                         />
                       </li>
                     ))}
