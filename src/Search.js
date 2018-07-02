@@ -14,6 +14,7 @@ class Search extends Component {
 		this.setState({results: []})
 	}
 
+	// TO DO: CLEAR RESULTS WHEN SEARCH BAR IS EMPTY
 	updateQuery = (query) => {
 		this.setState({query: query}) // Now whatever we write in query will change the value of the input tag
 		switch (query) {
@@ -22,7 +23,9 @@ class Search extends Component {
 				break;
 			case (query):
 				BooksAPI.search(query).then((response) => {
-					if (!response.error) {
+					if (response.error) {
+						this.clearQuery()
+					} else {
 						this.setState({results: response})
 					}
 				})
