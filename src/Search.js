@@ -8,52 +8,30 @@ class Search extends Component {
 	state = {
 		query: '',
 		results: [],
-		booksOnShelves: []
+		currentBooks: []
 	}
 
-	clearQuery() {
-		this.setState({results: []})
-	}
+	// TO DO: INSERT A FUNCTION(S) TO ADD BOOK TO SHELF HERE AS WELL: HOW???
 
-	shelfChange = (book, shelf) => {
-		BooksAPI.update(book, shelf).then(() => {
-			BooksAPI.getAll().then(books => {
-				this.setState({results: books})
-				this.updateSearchBookShelves()
-			})
-		})
-	}
-
-	updateSearchBookShelves() {
-	    this.setState({
-	      results: this.state.results.map(book => {
-	        book.shelf = 'none' // All results in search query get shelf 'none'
-	        this.state.booksOnShelves.forEach(bookOnShelf => { // Books already on shelves in main page
-	          bookOnShelf.id === book.id && (book.shelf = bookOnShelf.shelf)
-	        })
-	        return book;
-	      })
-	    })
-	  }
-
-	// TO DO: CLEAR RESULTS WHEN SEARCH BAR IS EMPTY
-	updateQuery = (query) => {
+	// TO DO: CLEAR RESULTS WHEN SEARCH BAR IS EMPTY: HOW???
+	updateQuery = (query) => { // query is event.target.value
 		this.setState({query: query}) // Now whatever we write in query will change the value of the input tag
+
 		switch (query) {
 			case '':
-				this.clearQuery()
+				this.setState({results: []})
 				break;
 			case (query):
 				BooksAPI.search(query).then((response) => {
 					if (response.error) {
-						this.clearQuery()
+						this.setState({results: []})
 					} else {
 						this.setState({results: response})
 					}
 				})
 				break;
 			default:
-				this.clearQuery()
+				this.setState({results: []})
 			break;
 		}
 	}

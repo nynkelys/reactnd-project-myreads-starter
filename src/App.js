@@ -18,9 +18,9 @@ class BooksApp extends React.Component {
       })
   }
 
-  shelfChange = (book, shelf) => {
+  shelfChange = (book, shelf) => { // NEEDS REVISION, DOES NOT WORK
     BooksAPI.update(book, shelf)
-    .then(() => BooksAPI.getAll())
+    .then(() => BooksAPI.getAll()) // ???
   }
 
   // Now the render method to finish off with

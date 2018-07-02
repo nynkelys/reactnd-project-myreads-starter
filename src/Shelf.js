@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book'
 
+// TO DO: Change into stateless component if it only has render()
 class Shelf extends Component { // Render method only, so stateless functional component
     render() {
       return ( // Render one shelf (that is called three times in App.js)
