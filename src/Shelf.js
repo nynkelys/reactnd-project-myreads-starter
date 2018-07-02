@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book'
 
-function Shelf(props, {shelfTitle, booksOnShelf, change}) { // Render method only, so stateless functional component
+function Shelf(props, {shelfTitle, booksOnShelf, changeShelf}) { // Render method only, so stateless functional component
     return ( // Render one shelf (that is called three times in App.js)
       <div>
         <div className="bookshelf">
@@ -13,7 +13,7 @@ function Shelf(props, {shelfTitle, booksOnShelf, change}) { // Render method onl
                     <li key={book.id}>
                       <Book
                       book={book}
-                      changeShelf={props.change}/>
+                      changeShelf={props.changeShelf}/>
                     </li>
                   ))}
                 </ol>

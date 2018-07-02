@@ -10,21 +10,26 @@ class Search extends Component {
 		results: []
 	}
 
+	clearQuery() {
+		this.setState({results: []})
+	}
+
 	updateQuery = (query) => {
 		this.setState({query: query}) // Now whatever we write in query will change the value of the input tag
-
-		if (query === '') {
-			this.setState({results: []})
-			return;
-		} else {
-			BooksAPI.search(query)
-			.then((results) => {
-				if (results instanceof Array) {
-					this.setState({results: results})
-				} else {
-					this.setState({results: []})
-				}
-			})
+		switch (query) {
+			case '':
+				this.clearQuery()
+				break;
+			case (query):
+				BooksAPI.search(query).then((response) => {
+					if (!response.error) {
+						this.setState({results: response})
+					}
+				})
+				break;
+			default:
+				this.clearQuery()
+			break;
 		}
 	}
 
@@ -44,7 +49,7 @@ class Search extends Component {
 	    		</div>
 	    		<div className="search-books-results">
 	    	  		<ol className="books-grid">
-	    	  			{this.state.results.map((book) => ( // Get allBooks prop from App.js (hence this.props) and map over them, putting them in results
+	    	  			{this.state.results.map((book) => (
                     		<li key={book.id}>
                       			<Book
                       				book={book}

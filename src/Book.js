@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Chooser from './Chooser'
 
+// TO DO: ENABLE MOVING BOOKS ACROSS SHELVES
 class Book extends Component {
 	render() {
 		return (

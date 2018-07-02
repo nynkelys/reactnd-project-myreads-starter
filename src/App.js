@@ -18,14 +18,14 @@ class BooksApp extends React.Component {
       })
   }
 
-  toNewShelf = (event) => {
-    BooksAPI.update({id: event.target.id}, event.target.value) // First event is book, second event is shelf
-    .then((response) => {
-       BooksAPI.getAll() // Get all these books
-       .then((books) => {
-        this.setState({booksInfo: books}) // Put them in the booksInfo array (update state)
-      });
-    });
+  toNewShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf) // First event is book, second event is shelf
+    .then(() => {
+       book.shelf = shelf
+       this.setState(state => ({
+        booksInfo: state.booksInfo.filter(b => b.id !== book.id).concat([book])
+      }))
+    })
   }
 
   // Now the render method to finish off with
