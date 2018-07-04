@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Chooser from './Chooser'
 
 // TO DO: Change into stateless component if it only has render()
+// TO DO: Write shortcuts instead of writing this.props all the time
 class Book extends Component {
 	render() {
 		return (
@@ -21,7 +22,8 @@ class Book extends Component {
 	}
 
 	static propTypes = {
-		book: PropTypes.object.isRequired
+		book: PropTypes.object.isRequired,
+		shelfChange: PropTypes.func.isRequired
 	}
 }
 

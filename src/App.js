@@ -8,7 +8,7 @@ import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    booksInfo: [],
+    booksInfo: [], // Array with book objects
   }
 
   // Now some regular homepage functions
@@ -18,21 +18,28 @@ class BooksApp extends React.Component {
       })
   }
 
-  shelfChange = (book, shelf) => { // NEEDS REVISION, DOES NOT WORK
+  // With help of @Pascal
+  shelfChange = (book, shelf) => { // Book and shelf are arguments
     BooksAPI.update(book, shelf)
-    .then(() => BooksAPI.getAll()) // ???
+    .then(() => {
+      book.shelf = shelf // Update shelf with shelf I just selected
+      this.setState((state) => ({ // State is argument
+        booksInfo: state.booksInfo.filter((b) => ( // Filter all books in booksInfo, return every book in the same shelf ...
+          b.id !== book.id // ... except the book that was selected for changing shelves (which we indicate by comparing its id to the id's in booksInfo)
+          )).concat(shelf !== "none" ? [book]: []) // And then, if chosen shelf is not 'none', concatenate the book to the array, if chosen shelf is 'none', concatenate empty array
+          //   if (shelf !== "none") {
+          //      booksInfo: state.booksInfo.concat([book])
+          // } else {
+          //      booksInfo: state.booksInfo.concat([])
+          // }
+      }))
+    })
   }
 
-  // Now the render method to finish off with
+  // TO DO: Write shortcuts instead of writing this.props all the time
   render() {
     return (
       <div className="app">
-        <div className="search-books">
-          <Route path="/search" render={() => (
-            <Search
-              allBooks={this.state.booksInfo}/>
-          )}/>
-        </div>
 
         <Route exact path="/" render={() => ( // Here we use render because there are props and not just one component
           <div className="list-books">
@@ -60,6 +67,14 @@ class BooksApp extends React.Component {
             </div>
           </div>
         )}/>
+
+        <div className="search-books">
+          <Route path="/search" render={() => (
+            <Search
+              shelfChange = {this.shelfChange}/>
+          )}/>
+        </div>
+
       </div>
     )
   }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+// TO DO: Change into stateless component if it only has render()
+// TO DO: Write shortcuts instead of writing this.props all the time
 class Chooser extends Component {
 	render() {
 		return (
@@ -15,6 +17,12 @@ class Chooser extends Component {
 			</div>
 		)
 	}
+
+	static propTypes = {
+		book: PropTypes.object.isRequired,
+		shelfChange: PropTypes.func.isRequired
+	}
 }
 
 export default Chooser;
+

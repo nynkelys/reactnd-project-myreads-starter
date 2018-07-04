@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Book from './Book'
 
 // TO DO: Change into stateless component if it only has render()
+// TO DO: Write shortcuts instead of writing this.props all the time
 class Shelf extends Component { // Render method only, so stateless functional component
     render() {
       return ( // Render one shelf (that is called three times in App.js)
@@ -28,9 +29,9 @@ class Shelf extends Component { // Render method only, so stateless functional c
 
   static propTypes = {
     booksOnShelf: PropTypes.array.isRequired,
-    shelfTitle: PropTypes.string.isRequired
+    shelfTitle: PropTypes.string.isRequired,
+    shelfChange: PropTypes.func.isRequired
   }
-
 }
 
 export default Shelf;

@@ -7,35 +7,28 @@ import * as BooksAPI from './BooksAPI'
 class Search extends Component {
 	state = {
 		query: '',
-		results: [],
-		currentBooks: []
+		results: []
 	}
-
-	// TO DO: INSERT A FUNCTION(S) TO ADD BOOK TO SHELF HERE AS WELL: HOW???
 
 	// TO DO: CLEAR RESULTS WHEN SEARCH BAR IS EMPTY: HOW???
-	updateQuery = (query) => { // query is event.target.value
-		this.setState({query: query}) // Now whatever we write in query will change the value of the input tag
+	search = (query) => {
+ 		if (query === '') {
+ 			this.setState({results: []})
+ 			return;
+		} else {
+			BooksAPI.search(query)
+			.then((results) => {
+				if (results instanceof Array) {
+					this.setState({results: results, query: query}) // Too slow, should be moved somewhere else // Why can't first letter be removed?
+				} else {
+					this.setState({results: []})
+				}
+			})
+ 		}
+ 	}
 
-		switch (query) {
-			case '':
-				this.setState({results: []})
-				break;
-			case (query):
-				BooksAPI.search(query).then((response) => {
-					if (response.error) {
-						this.setState({results: []})
-					} else {
-						this.setState({results: response})
-					}
-				})
-				break;
-			default:
-				this.setState({results: []})
-			break;
-		}
-	}
 
+	// TO DO: Write shortcuts instead of writing this.props all the time
 	render() {
 		return (
 			<div>
@@ -46,7 +39,7 @@ class Search extends Component {
 			        		type="text"
 			        		value={this.state.query}
 			        		placeholder="Search by title or author"
-			        		onChange={(event) => this.updateQuery(event.target.value)}
+			        		onChange={(event) => this.search(event.target.value)}
 			        	/>
 	      			</div>
 	    		</div>
@@ -56,6 +49,7 @@ class Search extends Component {
                     		<li key={book.id}>
                       			<Book
                       				book={book}
+                      				shelfChange={this.props.shelfChange}
                       			/>
                     		</li>
                   		))}
@@ -65,9 +59,9 @@ class Search extends Component {
 		)
 	}
 
-	static propTypes = {
-		allBooks: PropTypes.array.isRequired
-	}
+	  static propTypes = {
+    	shelfChange: PropTypes.func.isRequired
+  	}
 }
 
 export default Search;
