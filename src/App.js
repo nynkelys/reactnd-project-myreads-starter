@@ -27,6 +27,8 @@ class BooksApp extends React.Component {
         booksInfo: state.booksInfo.filter((b) => ( // Filter all books in booksInfo, return every book in the same shelf ...
           b.id !== book.id // ... except the book that was selected for changing shelves (which we indicate by comparing its id to the id's in booksInfo)
           )).concat(shelf !== "none" ? [book]: []) // And then, if chosen shelf is not 'none', concatenate the book to the array, if chosen shelf is 'none', concatenate empty array
+
+          // Why does this not work instead of line 29?
           //   if (shelf !== "none") {
           //      booksInfo: state.booksInfo.concat([book])
           // } else {

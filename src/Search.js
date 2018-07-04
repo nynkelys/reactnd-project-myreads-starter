@@ -19,14 +19,13 @@ class Search extends Component {
 			BooksAPI.search(query)
 			.then((results) => {
 				if (results instanceof Array) {
-					this.setState({results: results, query: query}) // Too slow, should be moved somewhere else // Why can't first letter be removed?
+					this.setState({results: results, query: query}) // Too slow, should be moved somewhere else // Why can't first letter be deleted?
 				} else {
 					this.setState({results: []})
 				}
 			})
  		}
  	}
-
 
 	// TO DO: Write shortcuts instead of writing this.props all the time
 	render() {
