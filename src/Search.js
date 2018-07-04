@@ -28,8 +28,9 @@ class Search extends Component {
  		console.log(this.state.queryResults)
  	}
 
-	// TO DO: Write shortcuts instead of writing this.props all the time
 	render() {
+		const { shelfChange } = this.props;
+		const { query, queryResults } = this.state;
 		return (
 			<div>
 	    		<div className="search-books-bar">
@@ -37,7 +38,7 @@ class Search extends Component {
 	      			<div className="search-books-input-wrapper">
 		        		<input
 			        		type="text"
-			        		value={this.state.query}
+			        		value={query}
 			        		placeholder="Search by title or author"
 			        		onChange={(event) => this.search(event.target.value)}
 			        	/>
@@ -45,11 +46,11 @@ class Search extends Component {
 	    		</div>
 	    		<div className="search-books-results">
 	    	  		<ol className="books-grid">
-	    	  			{this.state.queryResults.map((book) => (
+	    	  			{queryResults.map((book) => (
                     		<li key={book.id}>
                       			<Book
                       				book={book}
-                      				shelfChange={this.props.shelfChange}
+                      				shelfChange={shelfChange}
                       			/>
                     		</li>
                   		))}
