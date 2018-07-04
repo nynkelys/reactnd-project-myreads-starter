@@ -7,24 +7,25 @@ import * as BooksAPI from './BooksAPI'
 class Search extends Component {
 	state = {
 		query: '',
-		results: []
+		queryResults: []
 	}
 
 	// TO DO: CLEAR RESULTS WHEN SEARCH BAR IS EMPTY: HOW???
 	search = (query) => {
- 		if (query === '') {
- 			this.setState({results: []})
- 			return;
-		} else {
+ 		if (query) {
 			BooksAPI.search(query)
 			.then((results) => {
-				if (results instanceof Array) {
-					this.setState({results: results, query: query}) // Too slow, should be moved somewhere else // Why can't first letter be deleted?
+				if (results !== null && typeof results === 'object') {
+					this.setState({queryResults: results, query: query}) // It seems like search is only performed on first letter after first two letters are typed in
 				} else {
-					this.setState({results: []})
+					this.setState({queryResults: []})
 				}
 			})
+		} else {
+ 			this.setState({queryResults: []})
+ 			return;
  		}
+ 		console.log(this.state.queryResults)
  	}
 
 	// TO DO: Write shortcuts instead of writing this.props all the time
@@ -44,7 +45,7 @@ class Search extends Component {
 	    		</div>
 	    		<div className="search-books-results">
 	    	  		<ol className="books-grid">
-	    	  			{this.state.results.map((book) => (
+	    	  			{this.state.queryResults.map((book) => (
                     		<li key={book.id}>
                       			<Book
                       				book={book}
