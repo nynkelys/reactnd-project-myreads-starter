@@ -21,19 +21,13 @@ class BooksApp extends React.Component {
   // With help of @Pascal
   shelfChange = (book, shelf) => { // Book and shelf are arguments
     BooksAPI.update(book, shelf)
-    .then(() => {
+    .then(() => { // Returns shelves and what I get in my view are these shelves (not books!!!!!) (for every shelf entry (with id's), store them as states, they hold id's, map over these and link to id's of books in DB).
+      // This is a workaround!!!
       book.shelf = shelf // Update shelf with shelf I just selected
       this.setState((state) => ({ // State is argument
         booksInfo: state.booksInfo.filter((b) => ( // Filter all books in booksInfo, return every book in the same shelf ...
           b.id !== book.id // ... except the book that was selected for changing shelves (which we indicate by comparing its id to the id's in booksInfo)
           )).concat(shelf !== "none" ? [book]: []) // And then, if chosen shelf is not 'none', concatenate the book to the array, if chosen shelf is 'none', concatenate empty array
-
-          // Why does this not work instead of line 29?
-          //   if (shelf !== "none") {
-          //      booksInfo: state.booksInfo.concat([book])
-          // } else {
-          //      booksInfo: state.booksInfo.concat([])
-          // }
       }))
     })
   }
@@ -52,7 +46,7 @@ class BooksApp extends React.Component {
               <div>
                 <Shelf // Inside shelf component we can find the books
                   shelfTitle = "Currently Reading"
-                  booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "currentlyReading")}
+                  booksOnShelf = {this.state.booksInfo.filter((book) => book.shelf === "currentlyReading")} // shelfDefinedInState.map((bookId) => (this.state.booksInfo.find(bookInfo => bookInfo.id == bookId))
                   shelfChange = {this.shelfChange}/>
                 <Shelf
                   shelfTitle = "Want to Read"

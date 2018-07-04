@@ -10,22 +10,19 @@ class Search extends Component {
 		queryResults: []
 	}
 
-	// TO DO: CLEAR RESULTS WHEN SEARCH BAR IS EMPTY: HOW???
-	search = (query) => {
- 		if (query) {
-			BooksAPI.search(query)
-			.then((results) => {
-				if (results !== null && typeof results === 'object') {
-					this.setState({queryResults: results, query: query}) // It seems like search is only performed on first letter after first two letters are typed in
+	search = (event) => { // Everything is asynchronous (even a query of nothing)
+		const query = event.target.value;
+
+			BooksAPI.search(query) // From here ...
+			.then((results) => { // You don't know when you get the results
+				const hasResults = Array.isArray(results) // If results is array (which means results have been returned in array without error)
+				if (hasResults) {
+					this.setState({queryResults: results})
 				} else {
 					this.setState({queryResults: []})
 				}
 			})
-		} else {
- 			this.setState({queryResults: []})
- 			return;
- 		}
- 		console.log(this.state.queryResults)
+ 		this.setState({query})
  	}
 
 	render() {
@@ -40,7 +37,7 @@ class Search extends Component {
 			        		type="text"
 			        		value={query}
 			        		placeholder="Search by title or author"
-			        		onChange={(event) => this.search(event.target.value)}
+			        		onChange={this.search}
 			        	/>
 	      			</div>
 	    		</div>
