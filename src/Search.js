@@ -28,6 +28,7 @@ class Search extends Component {
 	render() {
 		const { shelfChange } = this.props;
 		const { query, queryResults } = this.state;
+		const { search } = this;
 		return (
 			<div>
 	    		<div className="search-books-bar">
@@ -37,8 +38,7 @@ class Search extends Component {
 			        		type="text"
 			        		value={query}
 			        		placeholder="Search by title or author"
-			        		onChange={this.search}
-			        	/>
+			        		onChange={search}/>
 	      			</div>
 	    		</div>
 	    		<div className="search-books-results">
