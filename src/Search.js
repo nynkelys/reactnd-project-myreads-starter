@@ -10,11 +10,11 @@ class Search extends Component {
 		queryResults: []
 	}
 
-	search = (event) => { // Everything is asynchronous (even a query of nothing)
+	search = (event) => {
 		const query = event.target.value;
 
-			BooksAPI.search(query) // From here ...
-			.then((results) => { // You don't know when you get the results
+			BooksAPI.search(query)
+			.then((results) => {
 				const hasResults = Array.isArray(results) // If results is array (which means results have been returned in array without error)
 				if (hasResults) {
 					this.setState({queryResults: results})

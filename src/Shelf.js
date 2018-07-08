@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book'
 
-function Shelf(props){ // Render method only, so stateless functional component
+function Shelf(props){
       const { shelfTitle, booksOnShelf, shelfChange } = props;
-      return ( // Render one shelf (that is called three times in App.js)
+      return (
         <div>
           <div className="bookshelf">
               <h2 className="bookshelf-title">{shelfTitle}</h2>
               <div className="bookshelf-books">
                   <ol className="books-grid">
-                    {booksOnShelf.map((book) => ( // Map over booksOnShelf, putting them in Book component below
+                    {booksOnShelf.map((book) => (
                       <li key={book.id}>
                         <Book
                         book={book}

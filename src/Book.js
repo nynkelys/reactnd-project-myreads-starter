@@ -4,10 +4,11 @@ import Chooser from './Chooser'
 
 function Book(props) {
 		const { book, shelfChange } = props;
+		const style = { width: 128, height: 193, backgroundImage: `url("${book.imageLinks?book.imageLinks.thumbnail:`http://via.placeholder.com/128x193?text=No%20Cover`}")`}
 		return (
 			    <div className="book">
 			        <div className="book-top">
-			            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks?book.imageLinks.thumbnail:`http://via.placeholder.com/128x193?text=No%20Cover`}")`}}>
+			            <div className="book-cover" style={style}>
 			            </div>
 			            <Chooser
 			            	book={book}
