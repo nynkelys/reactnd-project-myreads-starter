@@ -10,15 +10,15 @@ class Search extends Component {
 		queryResults: []
 	}
 
-	search = (event) => { // FOR EACH RESULT IN RESULTS, CHANGE SHELF TO RIGHT SHELF?
+	search = (event) => {
 		const query = event.target.value;
 
 			BooksAPI.search(query)
 			.then((results) => {
-				const hasResults = Array.isArray(results) // If results is array (which means results have been returned in array without error)
+				const hasResults = Array.isArray(results)
 				if (hasResults) {
 					this.props.booksInfo.map((book) =>
-						results.map((result) => result.shelf = book.shelf)
+						results.map((result) => {if (result.id === book.id) {result.shelf = book.shelf}}) // Change default shelf
 					)
 					this.setState({queryResults: results})
 				} else {
